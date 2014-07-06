@@ -59,6 +59,7 @@ type (
 		handlers404   []HandlerFunc
 		router        *httprouter.Router
 		HTMLTemplates *template.Template
+		Env           []interface{}
 	}
 )
 
@@ -378,4 +379,10 @@ func (c *Context) String(code int, msg string) {
 func (c *Context) Data(code int, data []byte) {
 	c.Writer.WriteHeader(code)
 	c.Writer.Write(data)
+}
+
+// Global Envrionment Access
+func (c *Context) Env(i int) interface{} {
+	// if Env is nil or item i not exists, it would panic
+	return c.engine.Env[i]
 }
